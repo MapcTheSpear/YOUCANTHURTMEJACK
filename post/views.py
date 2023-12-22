@@ -5,7 +5,7 @@ views.py - файл представлений приложений(вьюшек
 from django.shortcuts import render
 from django.http import HttpResponse
 from datetime import date
-from post.models import Post, Products
+from post.models import Post, Products, Comments, Hashtag, Category
 current_date = date.today()
 
 
@@ -34,6 +34,20 @@ def post_list_view(request):
         return render(request, 'post/list.html', context=context)
 
 
+def hashtag_list_view(reqeust):
+    if reqeust.method == 'GET':
+        hashtags = Hashtag.objects.all()
+
+    context = {
+        'hashtags' : hashtags
+    }
+    return render(
+        reqeust,
+        'hashtag/list.html',
+        context=context
+    )
+
+
 def products_view(request):
     if request.method == 'GET':
         products = Products.objects.all()
@@ -41,4 +55,14 @@ def products_view(request):
             'products': products
         }
         return render(request, 'product/products.html', context=context)
+
+
+def category_list_view(request):
+    if request.method == 'GET':
+        categories = Category.objects.all()
+        context = {
+            'categories': categories
+        }
+        return render(request, 'category/category.html', context=context)
+
 # Create your views here.

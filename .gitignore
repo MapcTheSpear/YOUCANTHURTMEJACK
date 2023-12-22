@@ -5,3 +5,5 @@ db.sqlite3
 post/migrations
 *.secret
 posts/media
+
+.idea

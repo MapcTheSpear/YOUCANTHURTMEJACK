@@ -10,6 +10,13 @@
             <h5 class="card-title"> {{ post.title }} {{ post.rate }} </h5>
             <p class="card-text">{{ post.text }}.</p>
             <p class="card-text">{{ post.created_at }}.</p>
+            {% for hashtag in post.hashtags.all %}
+                <a href=#>
+                    <p>
+                        #{{ hashtag.name }}
+                    </p>
+                </a>
+            {% endfor %}
             <a href="#" class="btn btn-primary">SHOW ME MORE</a>
   </div>
 </div>
