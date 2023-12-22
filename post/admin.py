@@ -4,7 +4,7 @@ admin.py - для настроек административного сайта
 
 from django.contrib import admin
 from post.models import (Post, Products, Comments,
-                         Hashtag)
+                         Hashtag, Category)
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
@@ -17,3 +17,4 @@ class PostAdmin(admin.ModelAdmin):
 admin.site.register(Products)
 admin.site.register(Comments)
 admin.site.register(Hashtag)
+admin.site.register(Category)
