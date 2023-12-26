@@ -34,6 +34,23 @@ def post_list_view(request):
         return render(request, 'post/list.html', context=context)
 
 
+def post_detail_view(request, post_id):
+    if request.method == "GET":
+        try:
+            post = Post.objects.get(id=post_id)
+        except Post.DoesNotExist:
+            return HttpResponse('404 not found')
+
+        context = {
+            'post': post
+        }
+        return render(
+            request,
+            'post/detail.html',
+            context=context
+        )
+
+
 def hashtag_list_view(reqeust):
     if reqeust.method == 'GET':
         hashtags = Hashtag.objects.all()
@@ -57,6 +74,23 @@ def products_view(request):
         return render(request, 'product/products.html', context=context)
 
 
+def product_detail_view(request, product_id):
+    if request.method == 'GET':
+        try:
+            product = Products.objects.get(id=product_id)
+        except Products.DoesNotExist:
+            return HttpResponse('404 not found')
+
+        context = {
+            'product': product
+        }
+        return render(
+            request,
+            'product/detail.html',
+            context=context
+        )
+
+
 def category_list_view(request):
     if request.method == 'GET':
         categories = Category.objects.all()
@@ -64,5 +98,7 @@ def category_list_view(request):
             'categories': categories
         }
         return render(request, 'category/category.html', context=context)
+
+
 
 # Create your views here.

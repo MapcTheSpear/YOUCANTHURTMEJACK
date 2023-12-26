@@ -5,12 +5,19 @@
 
 {% for product in products %}
     <div class="card" style="width: 18rem;">
-        <img src="{{ product.image }}" class="card-img-top" alt="...">
+        <img src="/media/{{ product.image }}" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title"> {{ product.title }} {{ product.price }} </h5>
             <p class="card-text">{{ product.description }}.</p>
             <p class="card-text">{{ product.created_at }}.</p>
-            <a href="#" class="btn btn-primary">SHOW ME MORE</a>
+            {% for categories in product.category.all %}
+                <a href=# class="btn btn-primary">
+                    <p>
+                        {{ categories.type }}
+                    </p>
+                </a>
+            {% endfor %}
+            <a href="/products/{{ product.id }}" class="btn btn-primary">SHOW ME MORE</a>
   </div>
 </div>
 {% endfor %}

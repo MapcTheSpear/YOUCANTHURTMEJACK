@@ -5,7 +5,7 @@
 
 {% for post in posts %}
     <div class="card" style="width: 18rem;">
-        <img src="{{ post.image }}" class="card-img-top" alt="...">
+        <img src="/media/{{ post.image }}" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title"> {{ post.title }} {{ post.rate }} </h5>
             <p class="card-text">{{ post.text }}.</p>
@@ -17,7 +17,7 @@
                     </p>
                 </a>
             {% endfor %}
-            <a href="#" class="btn btn-primary">SHOW ME MORE</a>
+            <a href="/posts/{{ post.id }}" class="btn btn-primary">SHOW ME MORE</a>
   </div>
 </div>
 {% endfor %}

@@ -78,7 +78,7 @@ class Category(BaseModel):
 
 
 class Products(BaseModel):
-    image = models.ImageField(upload_to='posts/media', null=True, blank=False)
+    image = models.ImageField(upload_to='posts/', null=True, blank=False)
     title = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
     price = models.FloatField(default=0)
@@ -132,6 +132,24 @@ class Comments(BaseModel):
         db_table = 'comments'
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
+
+
+class Reveiew(BaseModel):
+    product = models.ForeignKey(
+        "post.Products",
+        on_delete=models.CASCADE,
+        verbose_name='Продукт',
+        related_name='reviews'
+    )
+    text = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.text}'
+
+    class Meta:
+        db_table = 'reviews'
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
 
 
 

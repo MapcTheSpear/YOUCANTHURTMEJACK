@@ -7,3 +7,5 @@ post/migrations
 posts/media
 
 .idea
+staticfiles
+media
