@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+    <h1>Create Category</h1>
+        <form action="/category/create/" enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+
+
+
+{% endblock %}
