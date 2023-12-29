@@ -56,16 +56,16 @@ class CategoryForm(forms.Form):
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        exclude = ['post']
+        exclude = ['product']
         fields = ('text',)
 
-        labels ={
-            'post': 'Пост',
+        labels = {
+            'product': 'Продукт',
             'text': 'Отзыв',
         }
 
         help_texts = {
-            'post': 'Выберите пост',
+            'product': 'Выберите продукт',
             'text': 'Введите ваш отзыв'
         }
 

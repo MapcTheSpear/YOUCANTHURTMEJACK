@@ -66,7 +66,7 @@ class Post(BaseModel):
 
 
 class Category(BaseModel):
-    type = models.TextField(null=True, blank=True)
+    type = models.TextField(null=True, blank=True, unique=True)
 
     def __str__(self):
         return f'{self.type}'

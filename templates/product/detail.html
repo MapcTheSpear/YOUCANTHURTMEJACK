@@ -3,7 +3,7 @@
 {% block content %}
 
     <h1>Product Detail</h1>
-    <h2>{{ product.title }} {{ product.price }}</h2>
+    <h2>{{ product.title }} {{ '$' }}{{ product.price }}</h2>
 
     <p>{{ product.description }}</p>
 
@@ -29,7 +29,6 @@
         {% csrf_token %}
         {{ form.as_p }}
             <p>{{ form.product }}</p>
-            <p>{{ form.text }}</p>
             <button type="submit">Написать отзыв</button>
         </form>
 {% endblock %}

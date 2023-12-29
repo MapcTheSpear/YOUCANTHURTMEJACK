@@ -98,15 +98,14 @@ def product_detail_view(request, product_id):
         product = Products.objects.get(id=product_id)
         if form.is_valid():
             form = form.save(commit=False)
-            form.post = product
+            form.product = product
             form.save()
             return redirect('.')
         else:
             context = {
-                'form': form
+                'form': form,
             }
             return render(request, 'product/detail.html', context=context)
-
 
 
 def category_list_view(request):
