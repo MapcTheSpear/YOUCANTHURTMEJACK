@@ -7,22 +7,30 @@
 
     <p>{{ product.description }}</p>
 
-    <img src="/media/{{ product.image }}">
+    <img width="450" src="/media/{{ product.image }}">
 
     <p>{{ product.created_at }}</p>
 
     {% for category in categories %}
-        <a href = "" class="btn btn-primary">
         <p>
             {{ category.type }}
         </p>
     </a>
     <br>
     {% endfor %}
-
+    <br>
     {% for review in product.reviews.all %}
         <p>
-        {{ review.text }}
+        {{ review.text }} {{ review.created_at }}
         </p>
     {% endfor %}
+  <h1>Write Review</h1>
+        <form action="." enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+            <p>{{ form.product }}</p>
+            <p>{{ form.text }}</p>
+            <button type="submit">Написать отзыв</button>
+        </form>
 {% endblock %}
+

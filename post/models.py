@@ -134,7 +134,7 @@ class Comments(BaseModel):
         verbose_name_plural = 'Комментарии'
 
 
-class Reveiew(BaseModel):
+class Review(BaseModel):
     product = models.ForeignKey(
         "post.Products",
         on_delete=models.CASCADE,

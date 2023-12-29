@@ -21,7 +21,7 @@
 
     {% for comment in post.comments.all %}
         <p>
-        {{ comment.text }}
+        {{ comment.text }} {{ comment.created_at }}
         </p>
     {% endfor %}
 {% endblock %}
