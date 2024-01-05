@@ -2,6 +2,20 @@
 
 {% block content %}
 
+    <h3>Post List</h3>
+    <form action="" method="get">
+    <input type="text" name="search" placeholder="Search">
+    <button type="submit">Search</button>
+    </form>
+
+    <h7>Sort by Date</h7>
+    <a href="?order=date" method="get">↑</a>
+    <a href="?order=-date" method="get">↓
+</a>
+    <h7>Sort by Rate</h7>
+    <a href="?order=rate" method="get">↑</a>
+    <a href="?order=-rate" method="get">↓
+</a>
 
 {% for post in posts %}
     <div class="card" style="width: 18rem;">
@@ -21,5 +35,13 @@
   </div>
 </div>
 {% endfor %}
+
+    <div>
+        {% for page in max_page %}
+            <a href="?page={{ page }}"method="get">
+            {{ page }}
+            </a>
+        {% endfor %}
+    </div>
 
 {% endblock %}

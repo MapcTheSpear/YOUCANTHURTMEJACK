@@ -5,7 +5,9 @@ views.py - файл представлений приложений(вьюшек
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
-from post.forms import PostForm, ProductForm, CategoryForm, ReviewForm
+from django.db.models import Q
+from django.conf import settings
+from post.forms import PostForm, ProductForm, CategoryForm, ReviewForm, PostForm2, ProductForm2
 from datetime import date
 from post.models import Post, Products, Comments, Hashtag, Category, Review
 current_date = date.today()
@@ -30,8 +32,36 @@ def goodbye_view(request):
 def post_list_view(request):
     if request.method == 'GET':
         posts = Post.objects.all()
+        search = request.GET.get('search')
+        order = request.GET.get('order')
+        if search:
+            posts = posts.filter(
+                Q(title__icontains=search) | Q(text__icontains=search)
+            )
+            # posts = posts.filter(title__contains=search) | posts.filter(text__icontains=search)
+        if order == 'date':
+            posts = posts.order_by('created_at')
+        if order == '-date':
+            posts = posts.order_by('-created_at')
+        if order == 'rate':
+            posts = posts.order_by('rate')
+        if order == '-rate':
+            posts = posts.order_by('-rate')
+        max_page = posts.__len__() / settings.OBJECT_PER_PAGE
+
+        if round(max_page) < max_page:
+            max_page += 1
+
+        else:
+            max_page = round(max_page)
+        page = request.GET.get('page', 1)
+
+        start = (int(page) - 1) * settings.OBJECT_PER_PAGE
+        end = (int(page)) * settings.OBJECT_PER_PAGE
+
         context = {
-            'posts': posts
+            'posts': posts[start:end],
+            'max_page': range(1, int(max_page) + 1)
         }
         return render(request, 'post/list.html', context=context)
 
@@ -53,6 +83,32 @@ def post_detail_view(request, post_id):
         )
 
 
+def post_update_view(request, post_id):
+    try:
+        post = Post.objects.get(id=post_id)
+    except Post.DoesNotExist:
+        return render(request, '404.html')
+
+    if request.method == 'GET':
+        context = {
+            'form': PostForm2(instance=post),
+            'post': post,
+        }
+        return render(request, 'post/update.html', context=context)
+
+    if request.method == 'POST':
+        form = PostForm2(request.POST, request.FILES,instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('/posts/')
+        else:
+            context = {
+                'form': form,
+                'post': post,
+            }
+            return render(request, 'post/update.html', context=context)
+
+
 def hashtag_list_view(reqeust):
     if reqeust.method == 'GET':
         hashtags = Hashtag.objects.all()
@@ -70,10 +126,63 @@ def hashtag_list_view(reqeust):
 def products_view(request):
     if request.method == 'GET':
         products = Products.objects.all()
+        search = request.GET.get('search')
+        order = request.GET.get('order')
+        if search:
+            products = products.filter(
+                Q(title__icontains=search) | Q(description__icontains=search)
+            )
+        if order == 'date':
+            products = products.order_by('created_at')
+        if order == '-date':
+            products = products.order_by('-created_at')
+        if order == 'price':
+            products = products.order_by('price')
+        if order == '-price':
+            products = products.order_by('-price')
+
+        max_page = products.__len__() / settings.OBJECT_PER_PAGE
+
+        if round(max_page) < max_page:
+            max_page += 1
+
+        else:
+            max_page = round(max_page)
+        page = request.GET.get('page', 1)
+
+        start = (int(page) - 1) * settings.OBJECT_PER_PAGE
+        end = (int(page)) * settings.OBJECT_PER_PAGE
         context = {
-            'products': products
+            'products': products[start:end],
+            'max_page': range(1, int(max_page) + 1)
         }
         return render(request, 'product/products.html', context=context)
+
+
+def product_update_view(request, post_id):
+    try:
+        product = Products.objects.get(id=post_id)
+    except Products.DoesNotExist:
+        return render(request, '404.html')
+
+    if request.method == 'GET':
+        context = {
+            'form': ProductForm2(instance=product),
+            'product': product,
+        }
+        return render(request, 'product/update.html', context=context)
+
+    if request.method == 'POST':
+        form = ProductForm2(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('/products/')
+        else:
+            context = {
+                'form': form,
+                'product': product,
+            }
+            return render(request, 'product/update.html', context=context)
 
 
 def product_detail_view(request, product_id):

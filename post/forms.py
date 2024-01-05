@@ -1,5 +1,5 @@
 from django import forms
-from post.models import Post, Review
+from post.models import Post, Review, Products
 
 
 class PostForm(forms.Form):
@@ -82,7 +82,37 @@ class ReviewForm(forms.ModelForm):
     #
 
 
-# class PostForm2(forms.ModelForm):
-#     class Meta:
-#         model = Post
-#
+class PostForm2(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ('title', 'text', 'image', 'rate')
+        labels = {
+            'title': 'Название поста',
+            'text': 'Текст поста',
+            'image': 'Картинка',
+            'rate': 'Рейтинг',
+        }
+        help_texts = {
+            'title': 'Введите название поста',
+            'text': 'Введите текст поста',
+            'image': 'Загрузите картинку',
+            'rate': 'Введите рейтинг',
+        }
+
+
+class ProductForm2(forms.ModelForm):
+    class Meta:
+        model = Products
+        fields = ('title', 'description', 'image', 'price')
+        labels = {
+            'title': 'Название продукта',
+            'description': 'Описание продукта',
+            'image': 'Картинка',
+            'price': 'Цена',
+        }
+        help_texts = {
+            'title': 'Введите название продукта',
+            'description': 'Введите описание продукта',
+            'image': 'Загрузите картинку',
+            'price': 'Введите цену',
+        }

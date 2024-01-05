@@ -11,7 +11,6 @@ from post.models import (Post, Products, Comments,
 class PostAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'rate', 'created_at', 'updated_at']
     list_display_links = ['id', 'title']
-    readonly_fields = ['title']
     search_fields = ['title', 'text']
 
 
